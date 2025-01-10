@@ -1,0 +1,22 @@
+{% extends 'plantilla.html' %}
+
+{% block title %}Detalles del Campista{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center" style="color: #f57c00; text-shadow: 2px 2px 4px #000;">Detalles del Campista</h1>
+
+    <div class="card card-custom p-4">
+        <ul class="list-unstyled" style="font-size: 1.2rem;">
+            <li class="info-box"><strong>Nombre Completo:</strong> {{ campista.nombre_completo }}</li>
+            <li class="info-box"><strong>Correo Electrónico:</strong> {{ campista.correo_electronico }}</li>
+            <li class="info-box"><strong>Teléfono:</strong> {{ campista.telefono }}</li>
+            <li class="info-box"><strong>Dirección:</strong> {{ campista.direccion }}</li>
+        </ul>
+    </div>
+
+    <div class="text-center mt-3">
+        <a href="{% url 'listado_campistas' %}" class="btn btn-custom">Volver</a>
+    </div>
+</div>
+{% endblock %}

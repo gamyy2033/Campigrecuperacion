@@ -1,0 +1,13 @@
+{% extends 'plantilla.html' %}
+
+{% block title %}Eliminar Campista{% endblock %}
+
+{% block content %}
+<h1>Eliminar Campista</h1>
+<p>¿Estás seguro de que deseas eliminar a <strong>{{ campista.nombre_completo }}</strong>?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a href="{% url 'listado_campistas' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

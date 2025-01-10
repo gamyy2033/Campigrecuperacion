@@ -1,0 +1,62 @@
+{% extends 'plantilla.html' %}
+
+{% block title %}Editar Reserva{% endblock %}
+
+{% block content %}
+<h1>Editar Reserva</h1>
+
+<!-- Mostrar error si la fecha de inicio es anterior a hoy -->
+{% if error_fecha_inicio %}
+<div class="alert alert-danger">
+    <p>{{ error_fecha_inicio }}</p>
+</div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="campista" class="form-label">Campista</label>
+        <select class="form-control" id="campista" name="campista" required>
+            {% for campista in campistas %}
+            <option value="{{ campista.id }}" {% if campista.id == reserva.campista.id %}selected{% endif %}>{{ campista.nombre_completo }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{ reserva.fecha_inicio|date:'Y-m-d' }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="fecha_fin" class="form-label">Fecha de Fin</label>
+        <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" value="{{ reserva.fecha_fin|date:'Y-m-d' }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="tipo_alojamiento" class="form-label">Tipo de Alojamiento</label>
+        <select class="form-control" id="tipo_alojamiento" name="tipo_alojamiento" required>
+            <option value="Tienda" {% if reserva.tipo_alojamiento == 'Tienda' %}selected{% endif %}>Tienda</option>
+            <option value="Cabaña" {% if reserva.tipo_alojamiento == 'Cabaña' %}selected{% endif %}>Cabaña</option>
+            <option value="Caravana" {% if reserva.tipo_alojamiento == 'Caravana' %}selected{% endif %}>Caravana</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="numero_personas" class="form-label">Número de Personas</label>
+        <input type="number" class="form-control" id="numero_personas" name="numero_personas" value="{{ reserva.numero_personas }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="estado" class="form-label">Estado de la Reserva</label>
+        <select class="form-control" id="estado" name="estado" required>
+            <option value="Confirmada" {% if reserva.estado == 'Confirmada' %}selected{% endif %}>Confirmada</option>
+            <option value="Pendiente" {% if reserva.estado == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+            <option value="Cancelada" {% if reserva.estado == 'Cancelada' %}selected{% endif %}>Cancelada</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="observaciones" class="form-label">Observaciones</label>
+        <textarea class="form-control" id="observaciones" name="observaciones">{{ reserva.observaciones }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    
+    <!-- Botón Cancelar -->
+    <a href="{% url 'listado_reservas' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
